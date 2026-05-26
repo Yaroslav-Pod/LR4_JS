@@ -60,3 +60,78 @@ logResult(`Різниця між == та ===:
 
     0 == ""  : ${0 == ""} (порожня строка до числа 0)
     0 === "" : ${0 === ""} (Number проти String)`);
+
+// ============================================================================
+// Завдання 2. Умови та логіка
+logHeader(2, "Умови та логіка");
+
+// if / else if / else
+function getGrade(score) {
+    if (typeof score !== 'number' || isNaN(score)) {
+        return "невалідний бал";
+    }
+    if (score < 0 || score > 100) {
+        return "невалідний бал";
+    }
+    if (score >= 90) {
+        return "відмінно";
+    } else if (score >= 75) {
+        return "добре";
+    } else if (score >= 60) {
+        return "задовільно";
+    } else {
+        return "незадовільно";
+    }
+}
+
+// switch
+function getSeasonUA(month) {
+    if (typeof month !== 'number' || isNaN(month) || month < 1 || month > 12) {
+        return "невідомий місяць";
+    }
+    switch (month) {
+        case 12:
+        case 1:
+        case 2:
+            return "Зима";
+        case 3:
+        case 4:
+        case 5:
+            return "Весна";
+        case 6:
+        case 7:
+        case 8:
+            return "Літо";
+        case 9:
+        case 10:
+        case 11:
+            return "Осінь";
+        default:
+            return "невідомий місяць";
+    }
+}
+
+// Тернарний оператор
+const status = age >= 18 ? "повнолітній" : "неповнолітній";
+const score = 85;
+const isPassed = score >= 60 ? "Складено" : "Не складено";
+
+logResult(`Перевірка логіки:
+Оцінка за 95 балів: ${getGrade(95)}
+Оцінка за 80 балів: ${getGrade(80)}
+Оцінка за 65 балів: ${getGrade(65)}
+Оцінка за 45 балів: ${getGrade(45)}
+Оцінка за 120 балів: ${getGrade(120)}
+Оцінка за -10 балів: ${getGrade(-10)}
+Оцінка за "45" балів: ${getGrade("45")}
+
+Місяць 1 (січень) - це сезон: ${getSeasonUA(1)}
+Місяць 4 (квітень) - це сезон: ${getSeasonUA(4)}
+Місяць 7 (липень) - це сезон: ${getSeasonUA(7)}
+Місяць 10 (жовтень) - це сезон: ${getSeasonUA(10)}
+Місяць 13 (помилка) - це сезон: ${getSeasonUA(13)}
+Місяць 0 (помилка) - це сезон: ${getSeasonUA(0)}
+Місяць "6" (рядок) - це сезон: ${getSeasonUA("6")}
+
+Студент... ${status}
+Статус іспиту (${score}): ${isPassed}`);
