@@ -263,3 +263,60 @@ sum(10, 20)  -> ${sum(10, 20)}
 
 Деструктуризація в параметрах (для students[0] - ${students[0].name}):
 ${printStudentInfo(students[0])}`);
+
+// ============================================================================
+// Завдання 5. Обʼєкти
+logHeader(5, "Об'єкти");
+
+// Створення об'єкта
+const studentProfile = {
+    firstName: "Ярослав",
+    lastName: "Подолянчик",
+    age: 20,
+    university: "ХАІ",
+    grades: { math: 85, physics: 92, web: 96 },
+    isActive: true,
+    getFullName() {
+        return `${this.firstName} ${this.lastName}`;
+    },
+    getAverageGrade() {
+        const gradesValues = Object.values(this.grades);
+        if (gradesValues.length === 0) return 0;
+        const sum = gradesValues.reduce((acc, grade) => acc + grade, 0);
+        return (sum / gradesValues.length).toFixed(1); // Округлення до 1 знаку
+    }
+};
+
+// Доступ
+const dotNotationAge = studentProfile.age;
+const dynamicKey = "lastName";
+const bracketNotationLastName = studentProfile[dynamicKey]; // необхідна для динамічних ключів
+
+// Ітерація за допомогою Object.keys(), Object.values(), Object.entries()
+const keysExample = Object.keys(studentProfile.grades).join(", "); // [math, physics, web]
+const valuesExample = Object.values(studentProfile.grades).join(", "); // 85, 92, 96
+
+// Для entries вивід масиву підмасивів
+const entriesExample = Object.entries(studentProfile.grades)
+    .map(([subject, grade]) => `${subject}: ${grade}`)
+    .join("; ");
+
+// Копіювання через Spread та перевірка, що оригінал не змінився
+const updatedProfile = { ...studentProfile, firstName: "Андрій" };
+
+// Optional chaining
+const labScore = studentProfile.grades?.lab ?? "Немає оцінки за лабу";
+const mentorName = studentProfile.mentor?.name ?? "Не призначено";
+
+// Вивід результатів
+logResult(`Робота з об'єктами:
+Повне ім'я (метод): ${studentProfile.getFullName()}
+Середня оцінка (метод): ${studentProfile.getAverageGrade()}
+Доступ через крапку (вік): ${dotNotationAge}
+Динамічний доступ [${dynamicKey}]: ${bracketNotationLastName}
+Object.keys(): ${keysExample}
+Object.values(): ${valuesExample}
+Object.entries(): ${entriesExample}
+Копія (оригінал ім'я: ${studentProfile.firstName} | копія ім'я: ${updatedProfile.firstName})
+Optional chaining (labScore): ${labScore}
+Optional chaining (mentorName): ${mentorName}`);
