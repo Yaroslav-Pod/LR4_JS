@@ -135,3 +135,50 @@ logResult(`Перевірка логіки:
 
 Студент... ${status}
 Статус іспиту (${score}): ${isPassed}`);
+
+// ============================================================================
+// Завдання 3. Масиви
+logHeader(3, "Масиви");
+
+// Створення масиву об'єктів (студенти)
+let students = [
+    { name: "Анна", grade: 95, courses: ["JS", "HTML"] },
+    { name: "Богдан", grade: 72, courses: ["JS", "CSS"] },
+    { name: "Віталій", grade: 58, courses: ["HTML"] },
+    { name: "Дар'я", grade: 88, courses: ["JS", "React"] },
+    { name: "Євген", grade: 91, courses: ["Python", "JS"] },
+    { name: "Ірина", grade: 64, courses: ["CSS"] }
+];
+logResult(`Вхідний масив:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+// Модифікація (push, pop, splice)
+students.push({ name: "Олег", grade: 79, courses: ["JS"] });
+logResult(`Додано Олега через push:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+    const removed = students.pop();
+logResult(`Видалено Олега через pop:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+students.splice(2, 1);
+logResult(`Видалено Віталія через splice:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+students.splice(2, 0, { name: "Максим", grade: 83, courses: ["HTML", "CSS"] });
+logResult(`Додано Максима через splice:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+// find
+const topStudent = students.find(s => s.grade > 90);
+// filter
+const jsStudents = students.filter(s => s.courses.includes("JS"));
+// reduce
+const avgGrade = students.reduce((sum, s) => sum + s.grade, 0) / students.length;
+
+logResult(`Робота з масивом студентів, остаточний масив:
+${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}
+
+Перший відмінник (find): ${topStudent.name} (${topStudent.grade} балів)
+Кількість студентів на курсі JS (filter): ${jsStudents.length}
+Середній бал групи (reduce): ${avgGrade.toFixed(1)}`);
