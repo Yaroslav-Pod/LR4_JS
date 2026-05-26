@@ -320,3 +320,62 @@ Object.entries(): ${entriesExample}
 Копія (оригінал ім'я: ${studentProfile.firstName} | копія ім'я: ${updatedProfile.firstName})
 Optional chaining (labScore): ${labScore}
 Optional chaining (mentorName): ${mentorName}`);
+
+// ============================================================================
+// Завдання 6. Ланцюжки методів масивів
+logHeader(6, "Ланцюжки методів масивів");
+
+// Масив товарів
+const products = [
+    { name: "Ноутбук", price: 25000, category: "electronics", inStock: true, quantity: 5 },
+    { name: "Мишка", price: 600, category: "electronics", inStock: true, quantity: 10 },
+    { name: "Клавіатура", price: 1500, category: "electronics", inStock: false, quantity: 3 },
+    { name: "Смартфон", price: 18000, category: "electronics", inStock: true, quantity: 4 },
+    { name: "Футболка", price: 450, category: "clothes", inStock: true, quantity: 20 },
+    { name: "Куртка", price: 2500, category: "clothes", inStock: true, quantity: 2 },
+    { name: "Книга", price: 350, category: "books", inStock: true, quantity: 15 },
+    { name: "Настільна гра", price: 1200, category: "books", inStock: false, quantity: 0 }
+];
+
+// виведення масиву
+logResult(`Масив товарів:
+    ${products.map((p, index) => `${index + 1}. ${p.name} (Ціна: ${p.price} грн, Категорія: ${p.category}, К-сть: ${p.quantity}, В наявності: ${p.inStock ? "Так" : "Ні"})`).join("\n")}`);
+
+// Загальна вартість товарів у наявності (filter -> map -> reduce)
+const totalInStockCost = products
+    .filter(p => p.inStock)
+    .map(p => p.price * p.quantity)
+    .reduce((sum, itemCost) => sum + itemCost, 0);
+
+// Назви електроніки від дешевої до дорогої (filter -> sort -> map)
+const sortedElectronicsNames = products
+    .filter(p => p.category === "electronics")
+    .sort((a, b) => a.price - b.price)
+    .map(p => p.name);
+
+// Кількість товарів у кожній категорії (reduce)
+const categoryCounts = products.reduce((acc, p) => {
+    acc[p.category] = (acc[p.category] || 0) + 1;
+    return acc;
+}, {});
+
+logResult(`Робота з масивом
+Загальна вартість товарів у наявності: ${totalInStockCost} грн
+Електроніка (від дешевої до дорогої): ${sortedElectronicsNames.join(", ")}
+Кількість товарів за категоріями: ${JSON.stringify(categoryCounts)}`);
+
+// Виіедення масиву
+logResult(`Масив студентів:
+    ${students.map((s, index) => `${index + 1}. ${s.name} (Бал: ${s.grade}, Курси: ${s.courses.join(", ")})`).join("\n")}`);
+
+const sortByGradeDesc = [...students].sort((a, b) => b.grade - a.grade);
+const sortByNameAsc = [...students].sort((a, b) => a.name.localeCompare(b.name));
+
+// Перетворюємо масиви об'єктів на читабельний вигляд
+const gradeDescText = sortByGradeDesc.map(s => `${s.name} (${s.grade})`).join(", ");
+const nameAscText = sortByNameAsc.map(s => s.name).join(", ");
+
+logResult(`Сортування:
+Студенти за оцінкою: ${gradeDescText}
+Студенти за алфавітом: ${nameAscText}`);
+
