@@ -379,3 +379,65 @@ logResult(`Сортування:
 Студенти за оцінкою: ${gradeDescText}
 Студенти за алфавітом: ${nameAscText}`);
 
+// ============================================================================
+// Завдання 7. Рядки
+logHeader(7, "Рядки");
+
+// capitalize робить першу літеру великою, решту малими
+const capitalize = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : "";
+
+// countWords підраховує кількість слів
+const countWords = str => {
+    const trimmed = str.trim();
+    return trimmed === "" ? 0 : trimmed.split(/\s+/).length;
+};
+
+// truncate — обрізає рядок до вказаної довжини
+const truncate = (str, maxLength) => str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+
+// isValidEmail
+function isValidEmail(email) {
+    if (!email.includes("@")) return false;
+
+    const firstAtIdx = email.indexOf("@");
+    const lastAtIdx = email.lastIndexOf("@");
+
+    // Містить рівно один символ @
+    if (firstAtIdx !== lastAtIdx) return false;
+
+    // Перед @ є хоча б один символ
+    if (firstAtIdx === 0) return false;
+
+    const lastDotIdx = email.lastIndexOf(".");
+
+    // Після @ є хоча б один символ .
+    if (lastDotIdx <= firstAtIdx + 1) return false;
+
+    // Після останньої . є хоча б два символи
+    if (email.length - 1 - lastDotIdx < 2) return false;
+
+    return true;
+}
+
+// Демонстрація викликів
+logResult(`Результати роботи з рядками:
+
+apitalize("javaScript"): "${capitalize("javaScript")}"
+capitalize("hello world"): "${capitalize("hello world")}"
+capitalize(""): "${capitalize("")}" (порожній рядок)
+
+countWords("JavaScript це круто"): ${countWords("JavaScript це круто")} слів
+countWords("  Основи веб   програмування "): ${countWords("  Основи веб   програмування ")} слів
+countWords("     "): ${countWords("     ")} слів (рядок з одних пробілів)
+
+truncate("Це довгий текст для прикладу", 15): "${truncate("Це довгий текст для прикладу", 15)}"
+truncate("Короткий", 20): "${truncate("Короткий", 20)}"
+
+user@example.com: ${isValidEmail("user@example.com")} (валідний)
+test@kpi.ua: ${isValidEmail("test@kpi.ua")} (валідний)
+invalid-email: ${isValidEmail("invalid-email")} (немає @)
+@example.com: ${isValidEmail("@example.com")} (немає символів перед @)
+user@.com: ${isValidEmail("user@.com")} (немає символів між @ та .)
+user@example.c: ${isValidEmail("user@example.c")} (менше 2 символів після .)
+bad-email@: ${isValidEmail("bad-email@")} (немає символів після @)
+user@box@example.com: ${isValidEmail("user@box@example.com")} (дві @)`);
